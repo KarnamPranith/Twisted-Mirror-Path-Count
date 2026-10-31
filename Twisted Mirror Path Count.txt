@@ -1,0 +1,39 @@
+class Solution:
+    def uniquePaths(self, grid: List[List[int]]) -> int:
+        MOD = 10**9 + 7
+        m, n = len(grid), len(grid[0])
+
+        dp = [[0] * n for _ in range(m)]
+        dp[0][0] = 1
+
+        memo = {}
+
+        def resolve(r, c, d):
+            path = []
+
+            while True:
+                if r < 0 or r >= m or c < 0 or c >= n:
+                    res = None
+                    break
+
+                state = (r, c, d)
+
+                if state in memo:
+                    re…id[i][j] == 1 or dp[i][j] == 0:
+                    continue
+
+                # Move right
+                nxt = resolve(i, j + 1, 0)
+                if nxt is not None:
+                    x, y = nxt
+                    dp[x][y] = (dp[x][y] + dp[i][j]) % MOD
+
+                # Move down
+                nxt = resolve(i + 1, j, 1)
+                if nxt is not None:
+                    x, y = nxt
+                    dp[x][y] = (dp[x][y] + dp[i][j]) % MOD
+
+        return dp[m - 1][n - 1]
+
+        
